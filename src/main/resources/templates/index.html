@@ -14,31 +14,9 @@
 		<input type="submit" value="Login">
 		<br><br>
 	</form>
-	<table>
-		<thead>
-			<tr>
-				<th>PersonId</th>
-				<th>Name</th>
-				<th>Password</th>
-				<th>Age</th>
-				<th>Country</th>
-				<th>Gender</th>
-				<th>Friends</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="x : ${acc}">
-				<th th:text="${x.personId}"></th>
-				<th th:text="${x.name}"></th>
-				<th th:text="${x.password}"></th>
-				<th th:text="${x.age}"></th>
-				<th th:text="${x.country}"></th>
-				<th th:text="${x.gender}"></th>
-				<th th:text="${x.friends}"></th>
-			</tr>
-		</tbody>
-	</table>
-	<br><br><br>
+	<form action="sendToCreatePage" method="post">
+		<input type="submit" value="Creat New Account">
+	</form>
 	<div th:each="x : ${po}">
 				<span th:text="${x.postId}"></span>
 				<p th:text="${x.owner}"></p>

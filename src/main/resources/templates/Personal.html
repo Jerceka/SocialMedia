@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Personal</title>
+</head>
+<body>
+	<h2 th:text="${greeting}"></h2>
+	<div th:each="x : ${personalAccount}">
+		<span th:text="${x.age}"></span>
+		<span th:text="${x.country}"></span>
+		<span th:text="${x.gender}"></span><br>
+		<span>Friends : </span>
+		<span th:text="${x.friends}"></span>
+	</div>
+</body>
+</html>
