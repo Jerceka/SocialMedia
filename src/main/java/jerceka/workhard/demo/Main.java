@@ -14,7 +14,7 @@ public class Main {
 	@Autowired
 	private Ser service;
 	private String owner;
-	@RequestMapping("/")
+//	@RequestMapping("/")
 	public ModelAndView Home(Model m) {
 		List<Posts> po = service.allPosts();
 		m.addAttribute("po", po);
@@ -39,10 +39,19 @@ public class Main {
 	public ModelAndView sendToCreatePage() {
 		ModelAndView mv = new ModelAndView("create");
 		return mv;
-	}
-	@RequestMapping("/createAccount")
-	public void MakeAccount(Account a) {
-		service.makeAccount(a);
-		System.out.println(a);
+	}	
+	@RequestMapping("/")
+	public void MakeAccount(Account a){
+		long sum = 0;
+		long[] time = new long[100];
+		for(long i : time) {
+			long start = System.currentTimeMillis();
+			a.setName("name");
+			service.makeAccount(a);
+			long end = System.currentTimeMillis();
+			long d = end - start;
+			sum += d;
+		}  
+		System.out.println(sum/1e+3);
 	}
 }
