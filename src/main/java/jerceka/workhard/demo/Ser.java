@@ -51,4 +51,7 @@ public class Ser {
 	public void makeAccount(Account a) {
 		account.save(a);
 	}
+	public void savePerformance(Performance p) {
+		performance.save(p);
+	}
 }
