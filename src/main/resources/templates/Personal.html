@@ -6,6 +6,9 @@
 </head>
 <body>
 	<h2 th:text="${greeting}"></h2>
+	<form action="sendToPostPage" method="post">
+		<input type="submit" value="Create A Post">
+	</form>
 	<div th:each="x : ${personalAccount}">
 		<span th:text="${x.age}"></span>
 		<span th:text="${x.country}"></span>

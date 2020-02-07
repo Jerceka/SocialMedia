@@ -10,11 +10,12 @@ public class Posts {
 	private int likes;
 	private int owner;
 	private String post;
-	public int getPostId() {
+	private String date;
+	public int getPostid() {
 		return postid;
 	}
-	public void setPostId(int postId) {
-		this.postid = postId;
+	public void setPostid(int postid) {
+		this.postid = postid;
 	}
 	public int getLikes() {
 		return likes;
@@ -33,5 +34,11 @@ public class Posts {
 	}
 	public void setPost(String post) {
 		this.post = post;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 }

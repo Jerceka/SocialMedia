@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class Ser {
+	Date date = new Date();
 	@Autowired
 	private PostsRepo post;
 	@Autowired
@@ -35,10 +36,13 @@ public class Ser {
 			return false;
 		}
 	}
+	@Transactional
+	public boolean checkName(String name) {
+		return account.existsByName(name);
+	}
 	@SuppressWarnings("deprecation")
 	public String greeting(String name) {
-		Date time = new Date();
-		if(time.getHours()>=4&&time.getHours()<17) {
+		if(date.getHours()>=4&&date.getHours()<17) {
 			return "enjoy your day " + name;
 		}else{
 			return "Good your night " + name;
@@ -51,7 +55,15 @@ public class Ser {
 	public void makeAccount(Account a) {
 		account.save(a);
 	}
-	public void savePerformance(Performance p) {
-		performance.save(p);
+	public void createPost(Posts s) {
+		post.save(s);
+	}
+	public void savcePerformance(Performance p,long start,long end
+			,String methodName) {
+			long d = end - start;
+			p.setDate(date.toString());
+			p.setMethod(methodName);
+			p.setTime(d);
+			performance.save(p);
 	}
 }

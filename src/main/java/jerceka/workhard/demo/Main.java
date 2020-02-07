@@ -12,10 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class Main {
+	Date date = new Date();
 	@Autowired
 	private Ser service;
 	private String owner;
-	Date date = new Date();
 	@RequestMapping("/")
 	public ModelAndView Home(Model m,Performance p) {
 		long start = System.currentTimeMillis();
@@ -23,11 +23,7 @@ public class Main {
 		m.addAttribute("po", po);
 		ModelAndView mv = new ModelAndView("index");
 		long end = System.currentTimeMillis();
-		long d = end - start;
-		p.setDate(date.toString());
-		p.setMethod("HomePage");
-		p.setTime(d);
-		service.savePerformance(p);
+		service.savcePerformance(p,start, end, "HomePage");
 		return mv;
 	}
 	@RequestMapping("/login")
@@ -35,17 +31,13 @@ public class Main {
 			@RequestParam String password,Performance p) {
 		if(service.checkLogin(name, password)) {
 			long start = System.currentTimeMillis();
-			this.owner = name;
+			owner = name;
 			List<Account> Acc = service.getOneAccount(name);
 			m.addAttribute("personalAccount", Acc);
 			m.addAttribute("greeting", service.greeting(name));
 			ModelAndView mv = new ModelAndView("Personal");
 			long end = System.currentTimeMillis();
-			long d = end - start;
-			p.setDate(date.toString());
-			p.setMethod("OpenPeronslPage");
-			p.setTime(d);
-			service.savePerformance(p);
+			service.savcePerformance(p,start, end, "OpenPeronslPage");
 			return mv;
 		}else {
 			ModelAndView mv = new ModelAndView("index");
@@ -57,22 +49,48 @@ public class Main {
 		long start = System.currentTimeMillis();
 		ModelAndView mv = new ModelAndView("create");
 		long end = System.currentTimeMillis();
-		long d = end - start;
-		p.setDate(date.toString());
-		p.setMethod("SendToCreatePage");
-		p.setTime(d);
-		service.savePerformance(p);
+		service.savcePerformance(p,start, end, "SendToCreatePage");
 		return mv;
 	}	
 	@RequestMapping("/createAccount")
-	public void MakeAccount(Account a,Performance p){
-			long start = System.currentTimeMillis();
-			service.makeAccount(a);
-			long end = System.currentTimeMillis();
-			long d = end - start;
-			p.setDate(date.toString());
-			p.setMethod("MakeAccount");
-			p.setTime(d);
-			service.savePerformance(p);
+	public ModelAndView MakeAccount(Model m,Account a,Performance p){
+			if(!service.checkName(a.getName())) {
+				long start = System.currentTimeMillis();
+				service.makeAccount(a);
+				List<Account> Acc = service.getOneAccount(a.getName());
+				owner = a.getName();
+				m.addAttribute("personalAccount", Acc);
+				m.addAttribute("greeting", service.greeting(owner));
+				System.out.println(Acc.get(0).getPersonId());
+				ModelAndView mv = new ModelAndView("Personal");
+				long end = System.currentTimeMillis();
+				service.savcePerformance(p,start, end, "MakeAccount");
+				return mv;
+			}else {
+				ModelAndView mv = new ModelAndView("create");
+				return mv;
+			}
+	}
+	@RequestMapping("/sendToPostPage")
+	public ModelAndView goToPostPage(Performance p){
+		long start = System.currentTimeMillis();
+		ModelAndView mv = new ModelAndView("post");
+		long end = System.currentTimeMillis();
+		service.savcePerformance(p,start, end, "SendToPostPage");
+		return mv;
+	}
+	@RequestMapping("/createPost")
+	public ModelAndView makePost(Model m,Account a,Posts s,Performance p){
+		long start = System.currentTimeMillis();
+		List<Account> account = service.getOneAccount(owner);
+		s.setDate(date.toString());
+		int postOwner = account.get(0).getPersonId();
+		s.setOwner(postOwner);
+		service.createPost(s);
+		m.addAttribute("personalAccount", account);
+		ModelAndView mv = new ModelAndView("Personal");
+		long end = System.currentTimeMillis();
+		service.savcePerformance(p,start, end, "MakePost");
+		return mv;
 	}
 }
