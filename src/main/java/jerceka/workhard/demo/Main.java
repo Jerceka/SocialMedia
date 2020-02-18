@@ -80,6 +80,7 @@ public class Main {
 		long start = System.currentTimeMillis();
 		List<Account> account = service.getOneAccount(owner);
 		s.setDate(date.toString());
+		s.setName(owner);
 		int postOwner = account.get(0).getPersonId();
 		s.setOwner(postOwner);
 		service.createPost(s);
@@ -94,6 +95,8 @@ public class Main {
 		long start = System.currentTimeMillis();
 		List<Account> account = service.allAccount();
 		model.addAttribute("account", account);
+		List<Posts> po = service.allPosts();
+		model.addAttribute("po", po);
 		ModelAndView mv = new ModelAndView("home");
 		long end = System.currentTimeMillis();
 		service.savcePerformance(p, start, end, "goToHomePage");
