@@ -119,4 +119,21 @@ public class Ser {
 	public void Accepted(int ownerFriend,int owner) {
 		friend.Accepted(ownerFriend, owner);
 	}
+	@Transactional
+	public void test(int owner) {
+		System.out.println(friend.FrinedList(owner));
+		int y = friend.numberOfFriends(owner);
+		int[] x = new int[y];
+		for(int i=0;i<y;i++) {
+			int e = friend.FrinedList(owner).get(i).getFirst();
+			int w = friend.FrinedList(owner).get(i).getSecond();
+			if(e==owner) {
+				x[i] = w;
+			}else
+			if(w==owner) {
+				x[i] = e;
+			}
+		}
+		// x list have now all id of friends;
+	}
 }

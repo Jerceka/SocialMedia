@@ -24,4 +24,9 @@ public interface FriendsRepo extends JpaRepository<Friends, Integer> {
 			value = "update friends set accept=1 where first=?1 and second=?2", 
 			nativeQuery = true)
 	void Accepted(int OwnerNewFriend,int owner);
+	@Query(
+			value = "select * from friends where first=?1 and accept=1 or second=?1 and accept=1", 
+			nativeQuery = true)
+	List<Friends> FrinedList(int owner);
+	
 }
