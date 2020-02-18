@@ -5,16 +5,29 @@
 <title>Personal</title>
 </head>
 <body>
+	<span><a href="/">Home Page</a></span>
 	<h2 th:text="${greeting}"></h2>
-	<form action="sendToPostPage" method="post">
-		<input type="submit" value="Create A Post">
+	<form action="goToHomePage" method="post">
+		<input type="submit" value="Home Page">
 	</form>
 	<div th:each="x : ${personalAccount}">
 		<span th:text="${x.age}"></span>
 		<span th:text="${x.country}"></span>
 		<span th:text="${x.gender}"></span><br>
 		<span>Friends : </span>
-		<span th:text="${x.friends}"></span>
+		<span th:text="${friendsNumber}"></span>
 	</div>
+	<h2>Home</h2>
+	<a href="/goToAcceptFriendshipPage">Check New Friendship</a>
+	<form action="sendToPostPage" method="post">
+		<input type="submit" value="Create A Post">
+	</form>
+	<div th:each="x : ${personalPosts}">
+				<span th:text="${owner}"></span>
+				<span>             </span>
+				<span th:text="${x.date}"></span>
+				<p th:text="${x.post}"></p>
+				<p th:text="${x.likes}"></p><hr>
+			</div>
 </body>
 </html>

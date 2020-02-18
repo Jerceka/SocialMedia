@@ -12,7 +12,6 @@ public class Account {
 	private int age;
 	private String country;
 	private String gender;
-	private int friends;
 	public int getPersonId() {
 		return personid;
 	}
@@ -48,11 +47,5 @@ public class Account {
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
-	}
-	public int getFriends() {
-		return friends;
-	}
-	public void setFriends(int friends) {
-		this.friends = friends;
 	}
 }

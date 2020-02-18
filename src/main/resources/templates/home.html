@@ -2,16 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>home</title>
 </head>
 <body>
 	<span><a href="/">Home Page</a></span>
 	<span>---------------------</span>
 	<span><a href="/MyPage">Your Page</a></span>
-	<h1>Post</h1>
-	<form action="createPost" method="post">
-		<input type="text" name="post"><br>
-		<input type="submit" value="Post It">
-	</form>
+	<div th:each="x : ${account}">
+		<form action="addFriend">
+			<input th:value="${x.name}" name="name" readonly>
+			<input  type="submit" value="Add Friend">
+		</form>
+	</div>
 </body>
 </html>

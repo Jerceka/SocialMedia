@@ -2,16 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Accept Friendship</title>
 </head>
 <body>
 	<span><a href="/">Home Page</a></span>
 	<span>---------------------</span>
 	<span><a href="/MyPage">Your Page</a></span>
-	<h1>Post</h1>
-	<form action="createPost" method="post">
-		<input type="text" name="post"><br>
-		<input type="submit" value="Post It">
-	</form>
+	<h2>Accpet if u want</h2>
+	<div th:each="x : ${waitingList}">
+		<form action="acceptFriend">
+			<input th:value="${x.name}" name="name" readonly>
+			<input  type="submit" value="Accept">
+		</form>
+	</div>
 </body>
 </html>
