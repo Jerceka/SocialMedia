@@ -1,5 +1,7 @@
 package jerceka.workhard.demo;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class Main {
-	Date date = new Date();
 	@Autowired
 	private Ser service;
 	private String owner;
@@ -79,7 +80,15 @@ public class Main {
 	public ModelAndView makePost(Model m,Account a,Posts s,Performance p){
 		long start = System.currentTimeMillis();
 		List<Account> account = service.getOneAccount(owner);
-		s.setDate(date.toString());
+		LocalDateTime myDateObj = LocalDateTime.now();
+	    DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+	    DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
+//	    String formattedDate = myDateObj.format(date);
+//	    System.out.println("After formatting: " + formattedDate);
+//	    String x = myDateObj.format(time);
+//	    System.out.println("After formatting: " + x);
+		s.setDay(myDateObj.format(date));
+		s.setTime(myDateObj.format(time));
 		s.setName(owner);
 		int postOwner = account.get(0).getPersonId();
 		s.setOwner(postOwner);
