@@ -95,7 +95,9 @@ public class Main {
 		long start = System.currentTimeMillis();
 		List<Account> account = service.allAccount();
 		model.addAttribute("account", account);
-		List<Posts> po = service.allPosts();
+		List<Account> ownerAccount = service.getOneAccount(owner);
+		int ownerId = ownerAccount.get(0).getPersonId();
+		List<Posts> po = service.FriendsPosts(ownerId);
 		model.addAttribute("po", po);
 		ModelAndView mv = new ModelAndView("home");
 		long end = System.currentTimeMillis();

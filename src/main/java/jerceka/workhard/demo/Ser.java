@@ -120,8 +120,7 @@ public class Ser {
 		friend.Accepted(ownerFriend, owner);
 	}
 	@Transactional
-	public void test(int owner) {
-		System.out.println(friend.FrinedList(owner));
+	public List<Posts> FriendsPosts(int owner) {
 		int y = friend.numberOfFriends(owner);
 		int[] x = new int[y];
 		for(int i=0;i<y;i++) {
@@ -134,6 +133,15 @@ public class Ser {
 				x[i] = e;
 			}
 		}
-		// x list have now all id of friends;
+		List<Posts> friendPosts = null;
+		for(int i=0;i<y;i++) {
+			if(i==0) {
+				friendPosts = post.postsOfOwner(x[i]);
+			}else
+			if(i>0) {
+				friendPosts.addAll(post.postsOfOwner(x[i]));
+			}
+		}
+		return friendPosts;
 	}
 }
