@@ -19,6 +19,8 @@ public class Ser {
 	private PerformanceRepo performance;
 	@Autowired
 	private FriendsRepo friend;
+	@Autowired
+	private LikesRepo like;
 	public List<Posts> allPosts(){
 		return post.findAll();
 	}
@@ -143,5 +145,31 @@ public class Ser {
 			}
 		}
 		return friendPosts;
+	}
+	@Transactional
+	public void likePost(int postID,int whoLikeThePost,Likes l) {
+		try {
+			if(like.existsBypostid(postID)) {
+				List<Likes> likes = like.findByPostid(postID);
+				for(int i=0;i<likes.size();i++) {
+					if(whoLikeThePost==likes.get(i).getLikeownerid()) {
+					}else {
+						l.setPostid(postID);
+						l.setLikeownerid(whoLikeThePost);
+						like.save(l);
+						int likeNumber = like.likeNumbers(postID);
+						post.updateLikes(likeNumber, postID);
+					}
+				}
+			}else {
+				l.setPostid(postID);
+				l.setLikeownerid(whoLikeThePost);
+				like.save(l);
+				int likeNumber = like.likeNumbers(postID);
+				post.updateLikes(likeNumber, postID);
+			}
+		}catch(Exception e) {
+			System.err.println("likePost Have problem: " + e.getMessage());
+		}
 	}
 }

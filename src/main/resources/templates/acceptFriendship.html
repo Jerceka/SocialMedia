@@ -11,7 +11,8 @@
 	<h2>Accpet if u want</h2>
 	<div th:each="x : ${waitingList}">
 		<form action="acceptFriend">
-			<input th:value="${x.name}" name="name" readonly>
+			<Span th:text="${x.name}"></Span>
+			<input th:value="${x.name}" name="name" type="hidden">
 			<input  type="submit" value="Accept">
 		</form>
 	</div>

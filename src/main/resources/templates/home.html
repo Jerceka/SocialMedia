@@ -10,21 +10,26 @@
 	<span>---------------------</span>
 	<span><a href="/MyPage">Your Page</a></span>
 	</div>
-	<span>
 	<div th:each="x : ${account}">
 		<form action="addFriend">
-			<input th:value="${x.name}" name="name" readonly>
-			<input  type="submit" value="Add Friend">
+				<span th:text="${x.name}"></span>
+				<input th:value="${x.name}" name="name" type="hidden">
+				<input  type="submit" value="Add AFriend">
+					
 		</form>
 	</div>
-	</span>
-	<span>
 	<div th:each="x : ${po}">
-				<span th:text="${x.postid}"></span>
-				<p th:text="${x.name}"></p>
+	<form action="likePost">
+				<span th:text="${x.name}"></span>
+				<span>------</span>
+				<span th:text="${x.time}"></span>
+				<span>------</span>
+				<span th:text="${x.day}"></span>
 				<h2 th:text="${x.post}"></h2>
-				<p th:text="${x.likes}"></p><br><hr>
-			</div>
-	</span>
+				<span th:text="${x.likes}"></span>
+				<input type="hidden" th:value="${x.postid}" name="postid">
+				<input type="submit" value="Like"><hr>
+			</form>
+	</div>
 </body>
 </html>

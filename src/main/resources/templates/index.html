@@ -18,10 +18,13 @@
 		<input type="submit" value="Creat New Account">
 	</form>
 	<div th:each="x : ${po}">
-				<span th:text="${x.postid}"></span>
-				<p th:text="${x.owner}"></p>
-				<p th:text="${x.post}"></p>
-				<p th:text="${x.likes}"></p><br><hr>
+				<span th:text="${x.name}"></span>
+				<span>------</span>
+				<span th:text="${x.time}"></span>
+				<span>------</span>
+				<span th:text="${x.day}"></span>
+				<h2 th:text="${x.post}"></h2>
+				<p th:text="${x.likes}"></p><hr>
 			</div>
 </body>
 </html>

@@ -2,7 +2,6 @@ package jerceka.workhard.demo;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,10 +82,6 @@ public class Main {
 		LocalDateTime myDateObj = LocalDateTime.now();
 	    DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	    DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
-//	    String formattedDate = myDateObj.format(date);
-//	    System.out.println("After formatting: " + formattedDate);
-//	    String x = myDateObj.format(time);
-//	    System.out.println("After formatting: " + x);
 		s.setDay(myDateObj.format(date));
 		s.setTime(myDateObj.format(time));
 		s.setName(owner);
@@ -167,5 +162,15 @@ public class Main {
 		long end = System.currentTimeMillis();
 		service.savcePerformance(p, start, end, "GoToPersonalPage");
 		return mv;
+	}
+	@RequestMapping("/likePost")
+	public ModelAndView test(@RequestParam int postid,Likes l,
+			Model model,Performance p) {
+		long start = System.currentTimeMillis();
+		List<Account> ownerid = service.getOneAccount(owner);
+		service.likePost(postid,ownerid.get(0).getPersonId(),l);
+		long end = System.currentTimeMillis();
+		service.savcePerformance(p, start, end, "likePost");
+		return HomePage(model, p);
 	}
 }
