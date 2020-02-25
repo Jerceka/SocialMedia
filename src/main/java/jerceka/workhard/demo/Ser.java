@@ -151,16 +151,19 @@ public class Ser {
 		try {
 			if(like.existsBypostid(postID)) {
 				List<Likes> likes = like.findByPostid(postID);
-				for(int i=0;i<likes.size();i++) {
-					if(whoLikeThePost==likes.get(i).getLikeownerid()) {
-					}else {
+				int exists = 0;
+				for(Likes i : likes) {
+					if(whoLikeThePost==(i.getLikeownerid())) {
+						exists = 1;
+					}
+				}
+					if(exists==0) {
 						l.setPostid(postID);
 						l.setLikeownerid(whoLikeThePost);
 						like.save(l);
 						int likeNumber = like.likeNumbers(postID);
 						post.updateLikes(likeNumber, postID);
 					}
-				}
 			}else {
 				l.setPostid(postID);
 				l.setLikeownerid(whoLikeThePost);

@@ -166,11 +166,8 @@ public class Main {
 	@RequestMapping("/likePost")
 	public ModelAndView test(@RequestParam int postid,Likes l,
 			Model model,Performance p) {
-		long start = System.currentTimeMillis();
 		List<Account> ownerid = service.getOneAccount(owner);
 		service.likePost(postid,ownerid.get(0).getPersonId(),l);
-		long end = System.currentTimeMillis();
-		service.savcePerformance(p, start, end, "likePost");
 		return HomePage(model, p);
 	}
 }
