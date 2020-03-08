@@ -87,12 +87,23 @@ public class Ser {
 	}
 	@Transactional
 	public Boolean checkFriendship(int idofFriendsOffer,int idOfAcceptFriendOffer) {
-		try {
-			friend.rowWithTwoId(idofFriendsOffer, idOfAcceptFriendOffer).get(0).getFriendsid();
-			return true;
-		}catch(Exception e) {
-			return false;
-		}
+		if(friend.existsByFirst(idOfAcceptFriendOffer)) {
+			if(friend.existsBySecond(idOfAcceptFriendOffer)) {
+				List<Friends> firstList =friend.findByFirst(idOfAcceptFriendOffer);
+				List<Friends> secondList =friend.findBySecond(idOfAcceptFriendOffer);
+				for(Friends i : firstList) {
+					if(i.getSecond()==idofFriendsOffer) {
+						return true;
+					}
+				}
+				for(Friends i : secondList) {
+					if(i.getFirst()==idofFriendsOffer) {
+						return true;
+					}
+				}
+			};
+		};
+		return false;
 	}
 	public void SaveFriendship(Friends f){
 		friend.save(f);

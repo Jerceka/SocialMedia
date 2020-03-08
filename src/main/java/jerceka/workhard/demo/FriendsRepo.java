@@ -12,10 +12,6 @@ public interface FriendsRepo extends JpaRepository<Friends, Integer> {
 			nativeQuery = true)
 	int numberOfFriends(int id);
 	@Query(
-			value = "select * from friends where first=?1 and second=?2 or first=?2 and second=?1", 
-			nativeQuery = true)
-	List<Friends> rowWithTwoId(int idofFriendsOffer,int idOfAcceptFriendOffer);
-	@Query(
 			value = " select * from friends where second=?1 and accept=0", 
 			nativeQuery = true)
 	List<Friends> acceptList(int id);
@@ -28,5 +24,8 @@ public interface FriendsRepo extends JpaRepository<Friends, Integer> {
 			value = "select * from friends where first=?1 and accept=1 or second=?1 and accept=1", 
 			nativeQuery = true)
 	List<Friends> FrinedList(int owner);
-	
+	Boolean existsByFirst(int first);
+	Boolean existsBySecond(int second);
+	List<Friends> findByFirst(int first);
+	List<Friends> findBySecond(int second);
 }
