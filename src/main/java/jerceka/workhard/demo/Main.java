@@ -11,31 +11,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import jerceka.workhard.demo.database.Account;
+import jerceka.workhard.demo.database.Friends;
+import jerceka.workhard.demo.database.Likes;
+import jerceka.workhard.demo.database.Performance;
+import jerceka.workhard.demo.database.Posts;
+
 @RestController
 public class Main {
 	@Autowired
 	private Ser service;
 	private String owner;
 	@RequestMapping("/")
-	public ModelAndView Home(Model m,Performance p) {
+	public ModelAndView Home(Model model) {
 		long start = System.currentTimeMillis();
 		List<Posts> po = service.allPosts();
-		m.addAttribute("po", po);
+		model.addAttribute("po", po);
 		ModelAndView mv = new ModelAndView("index");
 		long end = System.currentTimeMillis();
-		service.savcePerformance(p,start, end, "HomePage");
+		service.savcePerformance(start, end, "HomePage");
 		return mv;
 	}
 	@RequestMapping("/login")
-	public ModelAndView openPersonlPage(Model m,@RequestParam String name,
-			@RequestParam String password,Performance p) {
+	public ModelAndView openPersonlPage(Model model,@RequestParam String name,
+			@RequestParam String password) {
 		if(service.checkLogin(name, password)) {
 			long start = System.currentTimeMillis();
 			owner = name;
-			service.loadPersonalPage(m, name);
+			service.loadPersonalPage(model, name);
 			ModelAndView mv = new ModelAndView("Personal");
 			long end = System.currentTimeMillis();
-			service.savcePerformance(p,start, end, "OpenPersonalPage");
+			service.savcePerformance(start, end, "OpenPersonalPage");
 			return mv;
 			
 		}else {
@@ -44,23 +50,23 @@ public class Main {
 		}
 	}
 	@RequestMapping("/sendToCreatePage")
-	public ModelAndView sendToCreatePage(Performance p) {
+	public ModelAndView sendToCreatePage() {
 		long start = System.currentTimeMillis();
 		ModelAndView mv = new ModelAndView("create");
 		long end = System.currentTimeMillis();
-		service.savcePerformance(p,start, end, "SendToCreatePage");
+		service.savcePerformance(start, end, "SendToCreatePage");
 		return mv;
 	}	
 	@RequestMapping("/createAccount")
-	public ModelAndView MakeAccount(Model m,Account a,Performance p){
+	public ModelAndView MakeAccount(Model model,Account a){
 			if(!service.checkName(a.getName())) {
 				long start = System.currentTimeMillis();
 				service.makeAccount(a);
 				owner = a.getName();
-				service.loadPersonalPage(m, a.getName());
+				service.loadPersonalPage(model, a.getName());
 				ModelAndView mv = new ModelAndView("Personal");
 				long end = System.currentTimeMillis();
-				service.savcePerformance(p,start, end, "MakeAccount");
+				service.savcePerformance(start, end, "MakeAccount");
 				return mv;
 			}else {
 				ModelAndView mv = new ModelAndView("create");
@@ -68,15 +74,15 @@ public class Main {
 			}
 	}
 	@RequestMapping("/sendToPostPage")
-	public ModelAndView goToPostPage(Performance p){
+	public ModelAndView goToPostPage(){
 		long start = System.currentTimeMillis();
 		ModelAndView mv = new ModelAndView("post");
 		long end = System.currentTimeMillis();
-		service.savcePerformance(p,start, end, "SendToPostPage");
+		service.savcePerformance(start, end, "SendToPostPage");
 		return mv;
 	}
 	@RequestMapping("/createPost")
-	public ModelAndView makePost(Model m,Account a,Posts s,Performance p){
+	public ModelAndView makePost(Model model,Account a,Posts s){
 		long start = System.currentTimeMillis();
 		List<Account> account = service.getOneAccount(owner);
 		LocalDateTime myDateObj = LocalDateTime.now();
@@ -88,14 +94,14 @@ public class Main {
 		int postOwner = account.get(0).getPersonId();
 		s.setOwner(postOwner);
 		service.createPost(s);
-		service.loadPersonalPage(m, owner);
+		service.loadPersonalPage(model, owner);
 		ModelAndView mv = new ModelAndView("Personal");
 		long end = System.currentTimeMillis();
-		service.savcePerformance(p,start, end, "MakePost");
+		service.savcePerformance(start, end, "MakePost");
 		return mv;
 	}
 	@RequestMapping("/goToHomePage")
-	public ModelAndView HomePage(Model model,Performance p) {
+	public ModelAndView HomePage(Model model) {
 		long start = System.currentTimeMillis();
 		List<Account> account = service.allAccount();
 		model.addAttribute("account", account);
@@ -105,12 +111,11 @@ public class Main {
 		model.addAttribute("po", po);
 		ModelAndView mv = new ModelAndView("home");
 		long end = System.currentTimeMillis();
-		service.savcePerformance(p, start, end, "goToHomePage");
+		service.savcePerformance(start, end, "goToHomePage");
 		return mv;
 	}
 	@RequestMapping("/addFriend")
-	public ModelAndView addFriend(@RequestParam String name,Model model,Friends f
-						,Performance p) {
+	public ModelAndView addFriend(@RequestParam String name,Model model,Friends f) {
 		long start = System.currentTimeMillis();
 		List<Account> whoSendFriendRequest = service.getOneAccount(owner);
 		List<Account> whoReceiveFriendRequest = service.getOneAccount(name);
@@ -125,23 +130,22 @@ public class Main {
 		ModelAndView mv = new ModelAndView("Personal");
 		service.loadPersonalPage(model, owner);
 		Long end = System.currentTimeMillis();
-		service.savcePerformance(p, start, end, "AddFriend");
+		service.savcePerformance(start, end, "AddFriend");
 		return mv;
 	}
 	@RequestMapping("/goToAcceptFriendshipPage")
-	public ModelAndView acceptFriend(Performance p,Model model) {
+	public ModelAndView acceptFriend(Model model) {
 		long start = System.currentTimeMillis();
 		ModelAndView mv = new ModelAndView("acceptFriendship");
 		List<Account> accounts = service.accpetList(owner);
 		model.addAttribute("waitingList", accounts);
 		service.accpetList(owner);
 		long end = System.currentTimeMillis();
-		service.savcePerformance(p, start, end, "acceptFriend");
+		service.savcePerformance(start, end, "acceptFriend");
 		return mv;
 	}
 	@RequestMapping("/acceptFriend")
-	public ModelAndView Accepted(Performance p,Model model
-			,@RequestParam String name) {
+	public ModelAndView Accepted(Model model,@RequestParam String name) {
 		long start = System.currentTimeMillis();
 		List<Account> Owner = service.getOneAccount(owner);
 		List<Account> Friend = service.getOneAccount(name);
@@ -151,23 +155,23 @@ public class Main {
 		service.loadPersonalPage(model, owner);
 		ModelAndView mv = new ModelAndView("Personal");
 		long end = System.currentTimeMillis();
-		service.savcePerformance(p, start, end, "Accepted");
+		service.savcePerformance(start, end, "Accepted");
 		return mv;
 	}
 	@RequestMapping("/MyPage")
-	public ModelAndView GoToPersonalPage(Performance p,Model model){
+	public ModelAndView GoToPersonalPage(Model model){
 		long start = System.currentTimeMillis();
 		service.loadPersonalPage(model, owner);
 		ModelAndView mv = new ModelAndView("Personal");
 		long end = System.currentTimeMillis();
-		service.savcePerformance(p, start, end, "GoToPersonalPage");
+		service.savcePerformance(start, end, "GoToPersonalPage");
 		return mv;
 	}
 	@RequestMapping("/likePost")
-	public ModelAndView test(@RequestParam int postid,Likes l,
-			Model model,Performance p) {
+	public ModelAndView likePost(@RequestParam int postid,Likes l,
+			Model model) {
 		List<Account> ownerid = service.getOneAccount(owner);
 		service.likePost(postid,ownerid.get(0).getPersonId(),l);
-		return HomePage(model, p);
+		return HomePage(model);
 	}
 }

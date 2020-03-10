@@ -1,8 +1,11 @@
-package jerceka.workhard.demo;
+package jerceka.workhard.demo.database;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import org.springframework.stereotype.Component;
+
+@Component
 @Entity
 public class Performance {
 	@Id

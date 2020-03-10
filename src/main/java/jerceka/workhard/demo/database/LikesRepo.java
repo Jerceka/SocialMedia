@@ -1,4 +1,4 @@
-package jerceka.workhard.demo;
+package jerceka.workhard.demo.database;
 
 import java.util.List;
 
