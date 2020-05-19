@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import jerceka.workhard.demo.database.Account;
-import jerceka.workhard.demo.database.Friends;
-import jerceka.workhard.demo.database.Likes;
-import jerceka.workhard.demo.database.Performance;
-import jerceka.workhard.demo.database.Posts;
+import jerceka.workhard.demo.database.*;
 
 @RestController
 public class Main {
