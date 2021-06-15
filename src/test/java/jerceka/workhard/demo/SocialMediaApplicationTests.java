@@ -9,15 +9,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class SocialMediaApplicationTests {
-	@Autowired
-	Ser service;
-	@Test
-	void checkLogin() {
-	assertTrue(service.checkLogin("Ahmet", "pasword"));
-	}
-	@Test
-	void checkFriendship() {
-		assertTrue(service.checkFriendship(30, 31));
-		assertFalse(service.checkFriendship(30, 30));
-	}
 }

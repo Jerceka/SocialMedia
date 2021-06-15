@@ -1,11 +1,14 @@
 package jerceka.workhard.demo.database;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Posts {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int postid;
 	private int likes;
 	private int owner;

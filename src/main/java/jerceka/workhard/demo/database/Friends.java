@@ -1,11 +1,14 @@
 package jerceka.workhard.demo.database;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Friends {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int friendsid;
 	private int first;
 	private int second;
